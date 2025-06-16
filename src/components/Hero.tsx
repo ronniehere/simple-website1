@@ -7,7 +7,6 @@ export const Hero = () => {
       {/* Company Header */}
       <div className="absolute top-6 left-6 flex items-center space-x-2">
         <h2 className="text-2xl font-bold text-black">Simple. ✨</h2>
-        <span className="text-2xl">⭐⭐⭐</span>
       </div>
       
       {/* Main Hero Content */}
