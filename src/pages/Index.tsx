@@ -1,4 +1,5 @@
 
+import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Services } from "@/components/Services";
@@ -10,13 +11,18 @@ import { Footer } from "@/components/Footer";
 const Index = () => {
   return (
     <div className="min-h-screen bg-white">
-      <Hero />
-      <About />
-      <Services />
-      <WhyChoose />
-      <Testimonials />
-      <Contact />
-      <Footer />
+      <Navigation />
+      <div className="pt-16"> {/* Add padding to account for fixed navigation */}
+        <Hero />
+        <About />
+        <Services />
+        <div id="why-choose">
+          <WhyChoose />
+        </div>
+        <Testimonials />
+        <Contact />
+        <Footer />
+      </div>
     </div>
   );
 };

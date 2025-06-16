@@ -3,12 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export const StaffingHero = () => {
   return (
-    <div className="min-h-screen flex flex-col text-center px-4 bg-gradient-to-b from-slate-50 to-white">
-      {/* Company Header */}
-      <div className="absolute top-6 left-6 flex items-center space-x-2">
-        <h2 className="text-2xl font-bold text-black">Simple. ✨</h2>
-      </div>
-      
+    <div className="min-h-screen flex flex-col text-center px-4 bg-gradient-to-b from-slate-50 to-white">      
       {/* Main Hero Content */}
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-4xl mx-auto">
