@@ -1,7 +1,10 @@
 
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen flex flex-col text-center px-4 bg-gradient-to-b from-slate-50 to-white">      
       {/* Main Hero Content */}
@@ -15,11 +18,11 @@ export const Hero = () => {
           </div>
           
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Clean Spaces. Simple Results.
+            {t("hero.title")}
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
-            Commercial cleaning that is modern, professional, and reliable.
+            {t("hero.subtitle")}
           </p>
           
           <Button 
@@ -27,7 +30,7 @@ export const Hero = () => {
             className="text-lg px-8 py-4 bg-blue-600 hover:bg-blue-700"
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Get a Quote
+            {t("hero.cta")}
           </Button>
         </div>
       </div>

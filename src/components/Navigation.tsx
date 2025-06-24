@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -17,12 +20,12 @@ export const Navigation = () => {
   };
 
   const navigationItems = [
-    { label: "Home", type: "link", to: "/" },
-    { label: "About", type: "scroll", target: "about" },
-    { label: "Services", type: "scroll", target: "services" },
-    { label: "Why Choose Us", type: "scroll", target: "why-choose" },
-    { label: "Staffing", type: "link", to: "/staffing" },
-    { label: "Contact", type: "scroll", target: "contact" },
+    { label: t("nav.home"), type: "link", to: "/" },
+    { label: t("nav.about"), type: "scroll", target: "about" },
+    { label: t("nav.services"), type: "scroll", target: "services" },
+    { label: t("nav.whyChoose"), type: "scroll", target: "why-choose" },
+    { label: t("nav.staffing"), type: "link", to: "/staffing" },
+    { label: t("nav.contact"), type: "scroll", target: "contact" },
   ];
 
   return (
@@ -57,14 +60,17 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* Desktop CTA Button */}
-          <Button 
-            size="sm" 
-            className="hidden md:block bg-blue-600 hover:bg-blue-700"
-            onClick={() => scrollToSection('contact')}
-          >
-            Get Quote
-          </Button>
+          {/* Desktop Language Toggle and CTA Button */}
+          <div className="hidden md:flex items-center space-x-4">
+            <LanguageToggle />
+            <Button 
+              size="sm" 
+              className="bg-blue-600 hover:bg-blue-700"
+              onClick={() => scrollToSection('contact')}
+            >
+              {t("nav.getQuote")}
+            </Button>
+          </div>
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -75,6 +81,9 @@ export const Navigation = () => {
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px]">
               <div className="flex flex-col space-y-4 mt-8">
+                <div className="mb-4">
+                  <LanguageToggle />
+                </div>
                 {navigationItems.map((item) => (
                   item.type === "link" ? (
                     <Link 
@@ -99,7 +108,7 @@ export const Navigation = () => {
                   className="bg-blue-600 hover:bg-blue-700 mt-4"
                   onClick={() => scrollToSection('contact')}
                 >
-                  Get Quote
+                  {t("nav.getQuote")}
                 </Button>
               </div>
             </SheetContent>
