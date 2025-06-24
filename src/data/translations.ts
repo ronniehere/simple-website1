@@ -1,4 +1,3 @@
-
 export const translations = {
   en: {
     nav: {
@@ -9,6 +8,7 @@ export const translations = {
       testimonials: "Testimonials",
       contact: "Contact",
       staffing: "Staffing",
+      getQuote: "Get Quote",
     },
     hero: {
       title: "Simple Solutions for Complex Challenges",
@@ -61,6 +61,7 @@ export const translations = {
       testimonials: "Témoignages",
       contact: "Contact",
       staffing: "Dotation",
+      getQuote: "Obtenir un Devis",
     },
     hero: {
       title: "Solutions Simples pour Défis Complexes",
