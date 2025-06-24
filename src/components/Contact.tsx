@@ -5,9 +5,58 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useToast } from "@/hooks/use-toast";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+
+const contactFormSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export const Contact = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
+  
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    console.log("Form submitted with data:", data);
+    
+    try {
+      // Simulate form submission - in a real app, this would send to your backend
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast({
+        title: t("contact.form.success.title"),
+        description: t("contact.form.success.description"),
+      });
+      
+      // Reset form after successful submission
+      form.reset();
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast({
+        title: t("contact.form.error.title"),
+        description: t("contact.form.error.description"),
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <section id="contact" className="py-20 bg-white">
@@ -22,26 +71,74 @@ export const Contact = () => {
             <CardHeader>
               <CardTitle>{t("contact.form.title")}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="name">{t("contact.form.name")}</Label>
-                <Input id="name" type="text" />
-              </div>
-              <div>
-                <Label htmlFor="email">{t("contact.form.email")}</Label>
-                <Input id="email" type="email" />
-              </div>
-              <div>
-                <Label htmlFor="phone">{t("contact.form.phone")}</Label>
-                <Input id="phone" type="tel" />
-              </div>
-              <div>
-                <Label htmlFor="message">{t("contact.form.message")}</Label>
-                <Textarea id="message" rows={4} />
-              </div>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                {t("contact.form.submit")}
-              </Button>
+            <CardContent>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("contact.form.name")}</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("contact.form.email")}</FormLabel>
+                        <FormControl>
+                          <Input type="email" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("contact.form.phone")}</FormLabel>
+                        <FormControl>
+                          <Input type="tel" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("contact.form.message")}</FormLabel>
+                        <FormControl>
+                          <Textarea rows={4} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-blue-600 hover:bg-blue-700"
+                    disabled={form.formState.isSubmitting}
+                  >
+                    {form.formState.isSubmitting ? t("contact.form.sending") : t("contact.form.submit")}
+                  </Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
           
