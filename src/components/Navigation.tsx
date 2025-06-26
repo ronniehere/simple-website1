@@ -2,14 +2,16 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, User, Shield } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { LanguageToggle } from "@/components/LanguageToggle";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useLanguage();
+  const { user, isAdmin, signOut } = useAuth();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -25,6 +27,7 @@ export const Navigation = () => {
     { label: t("nav.services"), type: "scroll", target: "services" },
     { label: t("nav.whyChoose"), type: "scroll", target: "why-choose" },
     { label: t("nav.staffing"), type: "link", to: "/staffing" },
+    { label: "Blog", type: "link", to: "/blog" },
     { label: t("nav.contact"), type: "scroll", target: "contact" },
   ];
 
@@ -60,9 +63,34 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* Desktop Language Toggle and CTA Button */}
+          {/* Desktop Auth and Language Toggle */}
           <div className="hidden md:flex items-center space-x-4">
             <LanguageToggle />
+            
+            {user ? (
+              <div className="flex items-center space-x-2">
+                {isAdmin && (
+                  <Link to="/admin">
+                    <Button size="sm" variant="outline">
+                      <Shield className="w-4 h-4 mr-1" />
+                      Admin
+                    </Button>
+                  </Link>
+                )}
+                <Button size="sm" variant="outline" onClick={signOut}>
+                  <User className="w-4 h-4 mr-1" />
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Link to="/auth">
+                <Button size="sm" variant="outline">
+                  <User className="w-4 h-4 mr-1" />
+                  Sign In
+                </Button>
+              </Link>
+            )}
+            
             <Button 
               size="sm" 
               className="bg-blue-600 hover:bg-blue-700"
@@ -84,6 +112,7 @@ export const Navigation = () => {
                 <div className="mb-4">
                   <LanguageToggle />
                 </div>
+                
                 {navigationItems.map((item) => (
                   item.type === "link" ? (
                     <Link 
@@ -104,6 +133,38 @@ export const Navigation = () => {
                     </button>
                   )
                 ))}
+                
+                {user ? (
+                  <div className="space-y-2">
+                    {isAdmin && (
+                      <Link to="/admin" onClick={() => setIsOpen(false)}>
+                        <Button className="w-full" variant="outline">
+                          <Shield className="w-4 h-4 mr-2" />
+                          Admin Dashboard
+                        </Button>
+                      </Link>
+                    )}
+                    <Button 
+                      className="w-full" 
+                      variant="outline" 
+                      onClick={() => {
+                        signOut();
+                        setIsOpen(false);
+                      }}
+                    >
+                      <User className="w-4 h-4 mr-2" />
+                      Sign Out
+                    </Button>
+                  </div>
+                ) : (
+                  <Link to="/auth" onClick={() => setIsOpen(false)}>
+                    <Button className="w-full" variant="outline">
+                      <User className="w-4 h-4 mr-2" />
+                      Sign In
+                    </Button>
+                  </Link>
+                )}
+                
                 <Button 
                   className="bg-blue-600 hover:bg-blue-700 mt-4"
                   onClick={() => scrollToSection('contact')}
