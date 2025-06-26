@@ -1,7 +1,11 @@
 
 import { Separator } from "@/components/ui/separator";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const Footer = () => {
+  const { user, isAdmin } = useAuth();
+
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-6xl mx-auto px-4">
@@ -34,7 +38,14 @@ export const Footer = () => {
         
         <div className="flex flex-col md:flex-row justify-between items-center text-gray-300">
           <p>&copy; 2025 Simple. Commercial Cleaning. All Rights Reserved.</p>
-          <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+          <div className="flex items-center space-x-4 mt-4 md:mt-0">
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            {user && isAdmin && (
+              <Link to="/admin" className="hover:text-white transition-colors text-sm">
+                Admin Dashboard
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </footer>

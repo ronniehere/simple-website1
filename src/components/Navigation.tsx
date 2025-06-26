@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, User, Shield } from "lucide-react";
+import { Menu, User } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -11,7 +11,7 @@ import { LanguageToggle } from "@/components/LanguageToggle";
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useLanguage();
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -68,20 +68,10 @@ export const Navigation = () => {
             <LanguageToggle />
             
             {user ? (
-              <div className="flex items-center space-x-2">
-                {isAdmin && (
-                  <Link to="/admin">
-                    <Button size="sm" variant="outline">
-                      <Shield className="w-4 h-4 mr-1" />
-                      Admin
-                    </Button>
-                  </Link>
-                )}
-                <Button size="sm" variant="outline" onClick={signOut}>
-                  <User className="w-4 h-4 mr-1" />
-                  Sign Out
-                </Button>
-              </div>
+              <Button size="sm" variant="outline" onClick={signOut}>
+                <User className="w-4 h-4 mr-1" />
+                Sign Out
+              </Button>
             ) : (
               <Link to="/auth">
                 <Button size="sm" variant="outline">
@@ -135,27 +125,17 @@ export const Navigation = () => {
                 ))}
                 
                 {user ? (
-                  <div className="space-y-2">
-                    {isAdmin && (
-                      <Link to="/admin" onClick={() => setIsOpen(false)}>
-                        <Button className="w-full" variant="outline">
-                          <Shield className="w-4 h-4 mr-2" />
-                          Admin Dashboard
-                        </Button>
-                      </Link>
-                    )}
-                    <Button 
-                      className="w-full" 
-                      variant="outline" 
-                      onClick={() => {
-                        signOut();
-                        setIsOpen(false);
-                      }}
-                    >
-                      <User className="w-4 h-4 mr-2" />
-                      Sign Out
-                    </Button>
-                  </div>
+                  <Button 
+                    className="w-full" 
+                    variant="outline" 
+                    onClick={() => {
+                      signOut();
+                      setIsOpen(false);
+                    }}
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    Sign Out
+                  </Button>
                 ) : (
                   <Link to="/auth" onClick={() => setIsOpen(false)}>
                     <Button className="w-full" variant="outline">
