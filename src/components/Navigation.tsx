@@ -2,16 +2,14 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, User } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useAuth } from "@/contexts/AuthContext";
 import { LanguageToggle } from "@/components/LanguageToggle";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useLanguage();
-  const { user, signOut } = useAuth();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -63,23 +61,9 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* Desktop Auth and Language Toggle */}
+          {/* Desktop Language Toggle and CTA */}
           <div className="hidden md:flex items-center space-x-4">
             <LanguageToggle />
-            
-            {user ? (
-              <Button size="sm" variant="outline" onClick={signOut}>
-                <User className="w-4 h-4 mr-1" />
-                Sign Out
-              </Button>
-            ) : (
-              <Link to="/auth">
-                <Button size="sm" variant="outline">
-                  <User className="w-4 h-4 mr-1" />
-                  Sign In
-                </Button>
-              </Link>
-            )}
             
             <Button 
               size="sm" 
@@ -123,27 +107,6 @@ export const Navigation = () => {
                     </button>
                   )
                 ))}
-                
-                {user ? (
-                  <Button 
-                    className="w-full" 
-                    variant="outline" 
-                    onClick={() => {
-                      signOut();
-                      setIsOpen(false);
-                    }}
-                  >
-                    <User className="w-4 h-4 mr-2" />
-                    Sign Out
-                  </Button>
-                ) : (
-                  <Link to="/auth" onClick={() => setIsOpen(false)}>
-                    <Button className="w-full" variant="outline">
-                      <User className="w-4 h-4 mr-2" />
-                      Sign In
-                    </Button>
-                  </Link>
-                )}
                 
                 <Button 
                   className="bg-blue-600 hover:bg-blue-700 mt-4"

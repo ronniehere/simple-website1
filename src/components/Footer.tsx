@@ -1,10 +1,12 @@
 
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 export const Footer = () => {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
 
   return (
     <footer className="bg-gray-900 text-white py-12">
@@ -40,9 +42,26 @@ export const Footer = () => {
           <p>&copy; 2025 Simple. Commercial Cleaning. All Rights Reserved.</p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            {user && isAdmin && (
-              <Link to="/admin" className="hover:text-white transition-colors text-sm">
-                Admin Dashboard
+            
+            {/* Authentication buttons */}
+            {user ? (
+              <>
+                <Button size="sm" variant="outline" onClick={signOut} className="text-gray-300 border-gray-600 hover:text-white hover:border-white">
+                  <User className="w-4 h-4 mr-1" />
+                  Sign Out
+                </Button>
+                {isAdmin && (
+                  <Link to="/admin" className="hover:text-white transition-colors text-sm">
+                    Admin Dashboard
+                  </Link>
+                )}
+              </>
+            ) : (
+              <Link to="/auth">
+                <Button size="sm" variant="outline" className="text-gray-300 border-gray-600 hover:text-white hover:border-white">
+                  <User className="w-4 h-4 mr-1" />
+                  Sign In
+                </Button>
               </Link>
             )}
           </div>
