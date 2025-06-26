@@ -62,7 +62,7 @@ export const Navigation = () => {
           </div>
 
           {/* Desktop Language Toggle and CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-6">
             <LanguageToggle />
             
             <Button 
