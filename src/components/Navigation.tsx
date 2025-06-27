@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, Calendar } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -61,9 +61,24 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* Desktop Language Toggle and CTA */}
-          <div className="hidden md:flex items-center space-x-6">
+          {/* Desktop Language Toggle and CTAs */}
+          <div className="hidden md:flex items-center space-x-4">
             <LanguageToggle />
+            
+            <a 
+              href="https://calendly.com/abe-sshift/15-minute-meeting-for-simple"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button 
+                size="sm" 
+                variant="outline"
+                className="border-blue-600 text-blue-600 hover:bg-blue-50"
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                Schedule a call
+              </Button>
+            </a>
             
             <Button 
               size="sm" 
@@ -108,8 +123,24 @@ export const Navigation = () => {
                   )
                 ))}
                 
+                <a 
+                  href="https://calendly.com/abe-sshift/15-minute-meeting-for-simple"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Button 
+                    className="w-full border-blue-600 text-blue-600 hover:bg-blue-50 mb-2"
+                    variant="outline"
+                  >
+                    <Calendar className="w-4 h-4 mr-2" />
+                    Schedule a call
+                  </Button>
+                </a>
+                
                 <Button 
-                  className="bg-blue-600 hover:bg-blue-700 mt-4"
+                  className="bg-blue-600 hover:bg-blue-700"
                   onClick={() => scrollToSection('contact')}
                 >
                   {t("nav.getQuote")}
