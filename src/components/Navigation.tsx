@@ -39,13 +39,13 @@ export const Navigation = () => {
           </Link>
           
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-4">
             {navigationItems.map((item) => (
               item.type === "link" ? (
                 <Link 
                   key={item.label}
                   to={item.to!} 
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
+                  className="text-sm text-gray-700 hover:text-blue-600 transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -53,7 +53,7 @@ export const Navigation = () => {
                 <button 
                   key={item.label}
                   onClick={() => scrollToSection(item.target!)}
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
+                  className="text-sm text-gray-700 hover:text-blue-600 transition-colors"
                 >
                   {item.label}
                 </button>
