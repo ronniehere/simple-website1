@@ -24,7 +24,7 @@ interface BlogPost {
 }
 
 const Admin = () => {
-  const { user, isAdmin, loading: authLoading, signOut } = useAuth();
+  const { user, isAdmin, loading: authLoading, signOut, profile } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -41,7 +41,7 @@ const Admin = () => {
   });
 
   useEffect(() => {
-    console.log('Admin check:', { user: !!user, isAdmin, authLoading, profile: isAdmin });
+    console.log('Admin check:', { user: !!user, isAdmin, authLoading, profile });
     
     if (!authLoading && (!user || !isAdmin)) {
       console.log('Redirecting to auth - user:', !!user, 'isAdmin:', isAdmin);
