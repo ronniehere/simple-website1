@@ -42,24 +42,14 @@ const AdminDashboard = () => {
   useEffect(() => {
     console.log('AdminDashboard - Auth state:', { 
       user: !!user, 
-      isAdmin, 
       authLoading 
     });
 
-    if (!authLoading) {
-      if (!user) {
-        console.log('No user, redirecting to auth');
-        navigate('/auth');
-        return;
-      }
-      
-      if (!isAdmin) {
-        console.log('User is not admin, redirecting to home');
-        navigate('/');
-        return;
-      }
+    if (!authLoading && !user) {
+      console.log('No user, redirecting to auth');
+      navigate('/auth');
     }
-  }, [user, isAdmin, authLoading, navigate]);
+  }, [user, authLoading, navigate]);
 
   // Fetch posts
   const fetchPosts = async () => {
@@ -84,10 +74,10 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    if (user && isAdmin && !authLoading) {
+    if (user && !authLoading) {
       fetchPosts();
     }
-  }, [user, isAdmin, authLoading]);
+  }, [user, authLoading]);
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -216,8 +206,8 @@ const AdminDashboard = () => {
     );
   }
 
-  // Don't render anything if not authenticated or not admin
-  if (!user || !isAdmin) {
+  // Don't render anything if not authenticated
+  if (!user) {
     return null;
   }
 
