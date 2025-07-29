@@ -1,9 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
+import { Settings } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -15,6 +19,8 @@ interface BlogPost {
 }
 
 const Blog = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -53,8 +59,25 @@ const Blog = () => {
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Blog</h1>
-          <p className="text-xl text-gray-600">Latest insights and updates</p>
+          <div className="flex justify-between items-center mb-8">
+            <div className="flex-1"></div>
+            <div className="flex-1 text-center">
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Blog</h1>
+              <p className="text-xl text-gray-600">Latest insights and updates</p>
+            </div>
+            <div className="flex-1 flex justify-end">
+              {user && (
+                <Button
+                  onClick={() => navigate('/admin')}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                >
+                  <Settings className="w-4 h-4" />
+                  Admin Dashboard
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
 
         {posts.length === 0 ? (
