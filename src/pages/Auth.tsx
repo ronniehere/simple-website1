@@ -11,15 +11,15 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn, user } = useAuth();
+  const { signIn, user, isAdmin, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
-      navigate('/');
+    if (user && !authLoading) {
+      navigate(isAdmin ? '/admin' : '/');
     }
-  }, [user, navigate]);
+  }, [user, isAdmin, authLoading, navigate]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
