@@ -41,9 +41,10 @@ const Admin = () => {
   });
 
   useEffect(() => {
-    console.log(user)
+    console.log('Admin check:', { user: !!user, isAdmin, authLoading, profile: isAdmin });
     
     if (!authLoading && (!user || !isAdmin)) {
+      console.log('Redirecting to auth - user:', !!user, 'isAdmin:', isAdmin);
       navigate('/auth');
     }
   }, [user, isAdmin, authLoading, navigate]);

@@ -114,6 +114,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isAdmin = profile?.role === 'admin';
+  console.log('AuthContext state:', { user: !!user, profile, isAdmin, loading });
 
   const value = {
     user,
