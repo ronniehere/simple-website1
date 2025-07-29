@@ -41,6 +41,8 @@ const Admin = () => {
   });
 
   useEffect(() => {
+    console.log(user)
+    
     if (!authLoading && (!user || !isAdmin)) {
       navigate('/auth');
     }
